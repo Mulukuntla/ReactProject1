@@ -1,10 +1,12 @@
 // Write your code at relevant places in the code below:
 
-import React, { useEffect, useState,useReducer } from "react";
+import React, { useEffect, useState,useReducer,useContext } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
+
+import AuthContext from "../../store/auth-context";
 const emailReducer=(state,action)=>{
     if(action.type==="USER_INPUT"){
         return {value:action.payload,isValid:action.payload.includes("@")}
@@ -28,7 +30,7 @@ const passwordReducer=(state,action)=>{
 }
 
 
-const Login = (props) => {
+const Login = () => {
   
   const [formIsValid, setFormIsValid] = useState(false);
   const [emailState,dispatchState]=useReducer(emailReducer,{
@@ -74,13 +76,13 @@ const Login = (props) => {
   const validatePasswordHandler = () => {
     dispatchPasswordState({type:"INPUT_BLUR"})
   };
-  
+  const authCtx=useContext(AuthContext)
 
 
   const submitHandler = (event) => {
     event.preventDefault();
    
-    props.onLogin(emailState.value, passwordState.value);
+    authCtx.onLogin(emailState.value, passwordState.value);
       
     
   };
