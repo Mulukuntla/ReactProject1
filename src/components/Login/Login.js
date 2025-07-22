@@ -1,6 +1,6 @@
 // Write your code at relevant places in the code below:
 
-import React, { useEffect, useState,useReducer,useContext } from "react";
+import React, { useEffect, useState,useReducer,useContext,useRef } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
@@ -45,7 +45,14 @@ const Login = () => {
 
   const {isValid:emailIsValid}=emailState
   const {isValid:passwordIsValid}=passwordState
+  
+  const emailRef=useRef(null)
+  console.log(emailRef)
+  useEffect(()=>{
+    console.log("hi")
+    emailRef.current.focus()
 
+  },[])
   useEffect(()=>{
     const timer=setTimeout(()=>{
         setFormIsValid(emailIsValid && passwordIsValid)
@@ -87,6 +94,8 @@ const Login = () => {
     
   };
 
+
+  console.log("hii")
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
@@ -97,6 +106,7 @@ const Login = () => {
         >
           <label htmlFor="email">E-Mail</label>
           <input
+            ref={emailRef}
             type="email"
             id="email"
             value={emailState.value}
